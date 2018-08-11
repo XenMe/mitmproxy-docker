@@ -24,7 +24,7 @@ RUN addgroup -S mitmproxy && adduser -S -G mitmproxy mitmproxy \
         python3-dev \
     && python3 -m ensurepip \
     && cd /home/mitmproxy \
-    && curl -SL ${WHEEL_MITMPROXY} \
+    && curl -SLO ${WHEEL_MITMPROXY} \
     && LDFLAGS=-L/lib pip3 install -U /home/mitmproxy/${WHEEL_BASENAME_MITMPROXY} \
     && apk del --purge \
         git \

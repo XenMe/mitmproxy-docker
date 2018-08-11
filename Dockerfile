@@ -6,8 +6,6 @@ ARG MITMPROXY_VERSION=4.0.4
 ARG WHEEL_MITMPROXY=https://snapshots.mitmproxy.org/${MITMPROXY_VERSION}/mitmproxy-${MITMPROXY_VERSION}-py3-none-any.whl 
 ARG WHEEL_BASENAME_MITMPROXY=mitmproxy-${MITMPROXY_VERSION}-py3-none-any.whl
 
-COPY $WHEEL_MITMPROXY /home/mitmproxy/
-
 # Add our user first to make sure the ID get assigned consistently,
 # regardless of whatever dependencies get added.
 RUN addgroup -S mitmproxy && adduser -S -G mitmproxy mitmproxy \

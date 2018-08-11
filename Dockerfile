@@ -12,6 +12,8 @@ COPY $WHEEL_MITMPROXY /home/mitmproxy/
 RUN addgroup -S mitmproxy && adduser -S -G mitmproxy mitmproxy \
     && apk add --no-cache \
         su-exec \
+        curl \
+        iptables \
         git \
         g++ \
         libffi \

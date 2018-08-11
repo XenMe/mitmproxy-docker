@@ -2,8 +2,9 @@ FROM alpine:3.7
 
 ENV LANG=en_US.UTF-8
 
-ARG WHEEL_MITMPROXY
-ARG WHEEL_BASENAME_MITMPROXY
+ARG MITMPROXY_VERSION=4.0.4
+ARG WHEEL_MITMPROXY=https://snapshots.mitmproxy.org/${MITMPROXY_VERSION}/mitmproxy-${MITMPROXY_VERSION}-py3-none-any.whl 
+ARG WHEEL_BASENAME_MITMPROXY=mitmproxy-${MITMPROXY_VERSION}-py3-none-any.whl
 
 COPY $WHEEL_MITMPROXY /home/mitmproxy/
 
@@ -24,6 +25,8 @@ RUN addgroup -S mitmproxy && adduser -S -G mitmproxy mitmproxy \
         python3 \
         python3-dev \
     && python3 -m ensurepip \
+    && cd /home/mitmproxy \
+    && curl -SL ${WHEEL_MITMPROXY} \
     && LDFLAGS=-L/lib pip3 install -U /home/mitmproxy/${WHEEL_BASENAME_MITMPROXY} \
     && apk del --purge \
         git \

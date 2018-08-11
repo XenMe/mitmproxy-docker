@@ -5,7 +5,6 @@ ENV LANG=en_US.UTF-8
 ARG MITMPROXY_VERSION=4.0.4
 ARG WHEEL_MITMPROXY=https://snapshots.mitmproxy.org/${MITMPROXY_VERSION}/mitmproxy-${MITMPROXY_VERSION}-py3-none-any.whl 
 ARG WHEEL_BASENAME_MITMPROXY=mitmproxy-${MITMPROXY_VERSION}-py3-none-any.whl
-ARG ENTRYPOINT_URL=https://github.com/XenMe/mitmproxy-docker/blob/master/docker-entrypoint.sh
 
 # Add our user first to make sure the ID get assigned consistently,
 # regardless of whatever dependencies get added.
@@ -26,8 +25,6 @@ RUN addgroup -S mitmproxy && adduser -S -G mitmproxy mitmproxy \
     && python3 -m ensurepip \
     && cd /home/mitmproxy \
     && curl -SLO ${WHEEL_MITMPROXY} \
-    && cd /usr/local/bin \
-    && curl -SLO ${ENTRYPOINT_URL} \
     && LDFLAGS=-L/lib pip3 install -U /home/mitmproxy/${WHEEL_BASENAME_MITMPROXY} \
     && apk del --purge \
         git \
@@ -39,8 +36,7 @@ RUN addgroup -S mitmproxy && adduser -S -G mitmproxy mitmproxy \
 
 VOLUME /home/mitmproxy/.mitmproxy
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+WORKDIR /home/mitmproxy/.mitmproxy
+ENTRYPOINT ["init.sh"]
 
 EXPOSE 8080 8081
-
-CMD ["mitmproxy"]

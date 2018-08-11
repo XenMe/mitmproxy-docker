@@ -37,6 +37,6 @@ RUN addgroup -S mitmproxy && adduser -S -G mitmproxy mitmproxy \
 VOLUME /home/mitmproxy/.mitmproxy
 
 WORKDIR /home/mitmproxy/.mitmproxy
-ENTRYPOINT ["init.sh"]
+ENTRYPOINT ["./init.sh"]
 
 EXPOSE 8080 8081
